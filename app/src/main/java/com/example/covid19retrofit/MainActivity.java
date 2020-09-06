@@ -32,19 +32,21 @@ ActivityMainBinding binding;
             public void onResponse(Call<String> call, Response<String> response) {
                 try {
                     JSONArray rootArray=new JSONArray(response.body());
-                    JSONObject rootObj=rootArray.getJSONObject(0);
-                    String countryResult=rootObj.getString("Country");
-                    String confirmedResult=rootObj.getString("Confirmed");
-                    String deathsResult=rootObj.getString("Deaths");
-                    String recoveredResult=rootObj.getString("Recovered");
-                    String activeResult=rootObj.getString("Active");
-                    String resultDate=rootObj.getString("Date");
-                    binding.activeTv.setText("Active"+activeResult);
-                    binding.confirmedTv.setText("Confirmed "+confirmedResult);
-                    binding.countryTv.setText("Country "+countryResult);
-                    binding.deathsTv.setText("Deaths "+deathsResult);
-                    binding.recoveredTv.setText("Recoverd "+recoveredResult);
-                    binding.dateTv.setText("Date "+resultDate);
+                    for(int i=0;i< rootArray.length();i++) {
+                        JSONObject rootObj = rootArray.getJSONObject(i);
+                        String countryResult = rootObj.getString("Country");
+                        String confirmedResult = rootObj.getString("Confirmed");
+                        String deathsResult = rootObj.getString("Deaths");
+                        String recoveredResult = rootObj.getString("Recovered");
+                        String activeResult = rootObj.getString("Active");
+                        String resultDate = rootObj.getString("Date");
+                        binding.activeTv.setText("Active" + activeResult);
+                        binding.confirmedTv.setText("Confirmed " + confirmedResult);
+                        binding.countryTv.setText("Country " + countryResult);
+                        binding.deathsTv.setText("Deaths " + deathsResult);
+                        binding.recoveredTv.setText("Recoverd " + recoveredResult);
+                        binding.dateTv.setText("Date " + resultDate);
+                    }
 
                 } catch (JSONException e) {
                     e.printStackTrace();
