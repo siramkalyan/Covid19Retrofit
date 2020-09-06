@@ -14,6 +14,10 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -40,12 +44,12 @@ ActivityMainBinding binding;
                         String recoveredResult = rootObj.getString("Recovered");
                         String activeResult = rootObj.getString("Active");
                         String resultDate = rootObj.getString("Date");
-                        binding.activeTv.setText("Active" + activeResult);
+                        binding.activeTv.setText("Active " + activeResult);
                         binding.confirmedTv.setText("Confirmed " + confirmedResult);
                         binding.countryTv.setText("Country " + countryResult);
                         binding.deathsTv.setText("Deaths " + deathsResult);
                         binding.recoveredTv.setText("Recoverd " + recoveredResult);
-                        binding.dateTv.setText("Date " + resultDate);
+                        binding.dateTv.setText("Date " + properDateformat(resultDate));
                     }
 
                 } catch (JSONException e) {
@@ -61,5 +65,30 @@ ActivityMainBinding binding;
             }
         });
 
+    }
+
+    private String proper(String result)
+    {
+        String[] a=result.split("T");
+        return a[0];
+    }
+
+    private String properDateformat(String resultDate) {
+        String inputFormat="yyyy-mm-dd";
+        String outputFormat="dd-mm-yyyy";
+        SimpleDateFormat inputForm=new SimpleDateFormat(inputFormat);
+        SimpleDateFormat outputForm=new SimpleDateFormat(outputFormat);
+         String s=null;
+         Date d=null;
+         try {
+
+                 d=inputForm.parse(resultDate);
+                 s=outputForm.format(d);
+
+         }
+         catch  (ParseException e) {
+             e.printStackTrace();
+         }
+      return s;
     }
 }
